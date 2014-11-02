@@ -2,7 +2,7 @@
 """Generates an HTML page using a given HTML template and a content file.
 
 The HTML template can contain any number of variables of the form %{varname} whose
-value is specified in the given content file.  The content file can also contain
+values are specified in the given content file.  The content file can also contain
 references to <galleria> element tags containing images and captions to be converted
 into a Galleria div. See: http://galleria.io/
 """
