@@ -1,0 +1,5 @@
+On the command line, cd to this directory and run:
+
+../blogit.py template.html content.html
+
+You will see a resulting index.html file and images/ and thumbs/ sub directories.
