@@ -1,0 +1,10 @@
+blogit is a convenient HTML generator utility for creating highly-customizable blog entries with image galleries.  Much of the content on http://nablizo.com was created using this utility.
+
+The concept is simple.  One uses an HTML template for all blog entries containing variable names that are expanded in a content file that is the actual blog entry.  This way, most of the HTML code for rendering the page can be kept separate from the actual blog content.  And all content has a consistent layout that can easily be changed later.
+
+Image galleries are easy.  Just create a <galleria> tag in the content file and list the image file names, and, optionally, their captions, and the script will convert the content into a Galleria div.
+
+The script depends on ImageMagick (http://www.imagemagick.org/) for the image scaling operations in creating the galleria.
+
+(C) Copyright, Louka Dlagnekov
+

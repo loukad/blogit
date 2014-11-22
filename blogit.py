@@ -94,7 +94,7 @@ def create(args):
     # Create and substitute the image galleries
     m = re.findall(r'(<galleria.*?</galleria>)', html, re.S)
     for content in m:
-        html = re.sub(content, generate_gallery(args, content), html)
+        html = re.sub(re.escape(content), generate_gallery(args, content), html)
 
     # Save the html
     with open(os.path.join(args.outputdir, args.outputfile), 'w') as outfile:
