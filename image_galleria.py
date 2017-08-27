@@ -57,10 +57,11 @@ def get_exif_info(image):
 
     return ' | '.join(exif_line)
 
-def generate(images, captions=dict(), outputdir='.', no_cache=False, 
-                stage_width=1080, stage_height=680, 
+def generate(images, captions=dict(), outputdir='.', no_cache=False,
+                stage_width=1080, stage_height=680,
                 width=1200, height=800, thumbheight=50,
-                disable_keyboard_nav=0, image_margin=20, 
+                disable_keyboard_nav=0, image_margin=0,
+                toggleinfo=True, thumbnails=True,
                 exif_class='isobar', js_opts=dict()):
     """ Generates a Galleria image gallery and returns the resulting HTML block.
 
@@ -80,14 +81,14 @@ def generate(images, captions=dict(), outputdir='.', no_cache=False,
         Returns:
             the HTML of the Galleria div
     """
-    
+
     for type in ['images', 'thumbs']:
         path = outputdir + '/' + type
         if not os.path.exists(path):
             os.makedirs(path)
 
     image_list = []
-    image_sizes = { 'images': '%dX%d' % (width, height), 'thumbs': 'X%d' % thumbheight } 
+    image_sizes = { 'images': '%dX%d' % (width, height), 'thumbs': 'X%d' % thumbheight }
 
     for image in images:
         mapping = dict()
@@ -114,11 +115,14 @@ def generate(images, captions=dict(), outputdir='.', no_cache=False,
     galleria_opts = { 'lightbox' : False, 'showImagenav' : False,
                       'transitionSpeed' : 450, 'dataSource' : image_list,
                       'preload' : 'all',
+                      '_toggleInfo' : toggleinfo,
+                      'showInfo' : toggleinfo,
+                      'thumbnails' : thumbnails,
                       'width' : stage_width, 'height' : stage_height,
                       'imageMargin' : image_margin,  }
 
     # Add any additional options or overrides
-    for key, value in js_opts:
+    for key, value in js_opts.iteritems():
         galleria_opts[key] = value
 
     navigation_code = "" if disable_keyboard_nav else """

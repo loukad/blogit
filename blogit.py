@@ -32,12 +32,13 @@ class AttributeParser(HTMLParser.HTMLParser):
         self.content = data
 
 def is_image(text):
-    return re.search(r'\.(?:jpe?g|png|gif)(\s|$)', text)
+    return re.search(r'\.(?:jpe?g|png|gif)(\s|$)', text, re.IGNORECASE)
     
 def generate_gallery(args, galleria_html):
     opts = dict()
     js_opts = dict()
-    known = set(['stage_width', 'stage_height', 'width', 'height', 'thumbheight', 'disable_keyboard_nav'])
+    known = set(['stage_width', 'image_margin', 'stage_height', 'width', 'height', 'thumbheight',
+                 'disable_keyboard_nav', 'toggleinfo', 'thumbnails'])
     images = []
     captions = defaultdict(str)
 
@@ -46,10 +47,17 @@ def generate_gallery(args, galleria_html):
     ap = AttributeParser()
     ap.feed(galleria_html)
     for key, value in ap.attributes:
-        if key in known:
-            opts[key] = int(value)
-        else:
+        if key not in known:
             js_opts[key] = value
+            continue
+        if value.isdigit():
+            opts[key] = int(value)
+        elif value.lower() == 'true':
+            opts[key] = True
+        elif value.lower() == 'false':
+            opts[key] = False
+        else:
+            opts[key] = value
 
     # Parse out the images
     curimage = ''
