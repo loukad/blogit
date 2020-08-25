@@ -14,15 +14,16 @@ import json
 
 import argparse
 
-import HTMLParser
+from io import StringIO
+from html.parser import HTMLParser
+
 import image_galleria
 
 import csv
-import cStringIO as c
 
 from collections import defaultdict
 
-class AttributeParser(HTMLParser.HTMLParser):
+class AttributeParser(HTMLParser):
     content = ''
     attributes = ''
 
@@ -66,7 +67,7 @@ def generate_gallery(args, galleria_html):
 
         # Split the line on spaces, looking for images
         if is_image(line):
-            for split in csv.reader(c.StringIO(line), delimiter=' ', escapechar='\\').next():
+            for split in csv.reader(StringIO(line), delimiter=' ', escapechar='\\').next():
                 if is_image(split):
                     images.append(split)
                     curimage = split

@@ -26,9 +26,9 @@ def resize_image(image, dest, no_cache, size_str):
         return
 
     command = 'convert %s -resize %s %s' % (image, size_str, dest)
-    print 'Sizing image:', image, 'into:', dest
+    print('Sizing image:', image, 'into:', dest)
     if os.system(command):
-        print 'Could not convert image', image
+        print('Could not convert image', image)
         sys.exit(1)
 
 def get_exif_info(image):
